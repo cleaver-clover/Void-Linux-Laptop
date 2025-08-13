@@ -3,4 +3,4 @@
 This repo is just to store some changes on the files needed for laptop use.
 
 The instalation guide can be found at [Void-Linux-Desktop
-](https://codeberg.org/no-leaf-clover/Void-Linux-Desktop)
+](https://github.com/cleaver-clover/Void-Linux-Desktop)
