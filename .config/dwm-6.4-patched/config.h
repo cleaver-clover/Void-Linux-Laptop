@@ -40,6 +40,9 @@ static const char *const autostart[] = {
 	/* Batery alarm on laptop */
 	"sh", "-c", "~/.config/scripts/battery-level.sh", NULL,
 
+	/* Restore brillo brightness*/
+	"sh", "-c", "brillo -I", NULL,
+
 	/* Notification */
 	//"dunstify","Hello World!!!", NULL,
 
@@ -188,10 +191,10 @@ static const Key keys[] = {
 	{ ShiftMask,       	    		XK_Down,   spawn,           SHCMD("mpc toggle") },
 	{ ShiftMask,       	    		XK_Right,  spawn,           SHCMD("mpc next") },
 	{ ShiftMask,       	    		XK_Left,   spawn,			SHCMD("mpc prev") },
-	{ MODKEY|ShiftMask,				XK_Prior,  spawn,			SHCMD("brillo -u 150000 -A 5") },
-	{ MODKEY|ShiftMask,				XK_Next,   spawn,          	SHCMD("brillo -u 150000 -U 5") },
-//	{ 0,							0x1008ff03,spawn,           SHCMD("brillo -u 150000 -A 5") },
-//	{ 0,							0x1008ff03,spawn,           SHCMD("brillo -u 150000 -U 5") },
+	{ MODKEY|ShiftMask,				XK_Prior,  spawn,			SHCMD("brillo -u 150000 -A 5 && brillo -O") },
+	{ MODKEY|ShiftMask,				XK_Next,   spawn,          	SHCMD("brillo -u 150000 -U 5 && brillo -O") },
+//	{ 0,							0x1008ff03,spawn,           SHCMD("brillo -u 150000 -A 5 && brillo -O") },
+//	{ 0,							0x1008ff03,spawn,           SHCMD("brillo -u 150000 -U 5 && brillo -O") },
 	/* Rotate screen on 180 degrees laptops */
 	{ ShiftMask,					0x1008ff74,spawn,   	    SHCMD("xrandr --output eDP --primary --mode 1920x1080 --rate 60 --rotate normal") },
 	{ 0,							0x1008ff74,spawn,   	    SHCMD("xrandr --output eDP --primary --mode 1920x1080 --rate 60 --rotate inverted") },
