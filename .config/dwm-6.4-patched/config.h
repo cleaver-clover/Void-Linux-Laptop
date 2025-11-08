@@ -22,11 +22,11 @@ static char normbgcolor[]           = "#212529";
 static char normbordercolor[]       = "#6C757D";
 static char normfgcolor[]           = "#DEE2E6";
 static char selfgcolor[]            = "#DEE2E6";
-static char selbordercolor[]        = "#DEE2E6"; 
-static char selbgcolor[]            = "#533A22"; 
-static char *colors[][3] = { 
-//	                 fg           bg           border   
-	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor }, 
+static char selbordercolor[]        = "#DEE2E6";
+static char selbgcolor[]            = "#533A22";
+static char *colors[][3] = {
+//	                 fg           bg           border
+	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
 	[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
@@ -108,8 +108,8 @@ static const Layout layouts[] = {
 	{ MOD, XK_F2,     ACTION##stack, {.i = 1 } }, \
 	{ MOD, XK_F3,     ACTION##stack, {.i = 2 } }, \
 	{ MOD, XK_F4,     ACTION##stack, {.i = -1 } },
- 
-/* grave key: ' symbol*/ 
+
+/* grave key: ' symbol*/
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -132,7 +132,7 @@ static const Key keys[] = {
 	{ MODKEY|Mod1Mask,				XK_l, 	   spawn,           SHCMD("logseq") },
 	{ MODKEY|Mod1Mask,				XK_k, 	   spawn,           SHCMD("keepassxc") },
 	{ MODKEY|Mod1Mask,				XK_n, 	   spawn,           SHCMD("nemo") },
- 	{ MODKEY,						XK_b,      togglebar,       {0} },	
+ 	{ MODKEY,						XK_b,      togglebar,       {0} },
 	{ MODKEY,						XK_plus,   incnmaster,      {.i = +1 } },
 	{ MODKEY,						XK_minus,  incnmaster,      {.i = -1 } },
 	{ MODKEY,						XK_h,      setmfact,        {.f = -0.05} },
@@ -179,12 +179,9 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,          {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,          {.i = +1 } },
 	{ MODKEY,                       XK_r,      spawn,           SHCMD("~/.config/scripts/set-rand-wallpaper.sh") },
-	{ MODKEY|ControlMask,       	XK_Prior,  spawn,           SHCMD("pamixer -u -i 2") },
-	{ MODKEY|ControlMask,       	XK_Next,   spawn,           SHCMD("pamixer -u -d 2") },
-	{ MODKEY|ControlMask,       	XK_m,      spawn,           SHCMD("pamixer -t") },
-	{ 0,							0x1008ff13,spawn,           SHCMD("pamixer -u -i 2") },
-	{ 0,							0x1008ff11,spawn,           SHCMD("pamixer -u -d 2") },
-	{ 0,							0x1008ff12,spawn,           SHCMD("pamixer -t") },
+	{ 0,							0x1008ff13,spawn,           SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+") },
+	{ 0,							0x1008ff11,spawn,           SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-") },
+	{ 0,							0x1008ff12,spawn,           SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") },
 	{ ControlMask,       	    	XK_Down,   spawn,           SHCMD("playerctl play-pause") },
 	{ ControlMask,       	    	XK_Right,  spawn,           SHCMD("playerctl next") },
 	{ ControlMask,       	    	XK_Left,   spawn,			SHCMD("playerctl previous") },

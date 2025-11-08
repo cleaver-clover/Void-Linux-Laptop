@@ -1,12 +1,10 @@
-#!/bin/bash 
+#!/bin/bash
 while read file
-do         
+do
 	case "$1" in
-        "d") 
+        "d")
 		sh ~/.config/scripts/set-wallpaper.sh "$file" ;;
-		"r") 
+		"r")
 		sh ~/.config/scripts/set-rand-wallpaper.sh ;;
-#		"h") 
-#		sh ~/.config/scripts/set-wallpaper-hypr.sh "$file" ;;
 	esac
 done
