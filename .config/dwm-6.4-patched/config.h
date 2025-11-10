@@ -125,7 +125,7 @@ static const Key keys[] = {
 	{ MODKEY,						XK_Return, spawn,			{.v = termcmd } },
 	{ MODKEY,						XK_space,  spawn,			SHCMD("rofi -show drun") },
 	{ MODKEY,						XK_Escape, spawn,			SHCMD(" ~/.config/scripts/rofi-powermenu.sh") },
-	{ MODKEY,						XK_w, 	   spawn,			SHCMD("~/.config/scripts/nsxiv.sh") },
+	{ MODKEY|Mod1Mask,				XK_w, 	   spawn,			SHCMD("~/.config/scripts/nsxiv.sh") },
 	{ MODKEY,						XK_p, 	   spawn,			SHCMD("flameshot gui") },
 	{ 0,							XK_Print,  spawn,           SHCMD("flameshot gui") },
 	{ MODKEY|Mod1Mask,				XK_b, 	   spawn,           SHCMD("librewolf") },
