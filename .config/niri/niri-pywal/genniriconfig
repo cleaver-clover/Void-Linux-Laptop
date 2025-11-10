@@ -63,7 +63,8 @@ input {
     focus-follows-mouse max-scroll-amount="0%"
 }
 
-output "DP-3" {
+// Comment to setup automatically
+output "eDP-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -73,10 +74,10 @@ output "DP-3" {
     // for the resolution.
     // If the mode is omitted altogether or is invalid, niri will pick one automatically.
     // Run "niri msg outputs" while inside a niri instance to list all outputs and their modes.
-    mode "1920x1080@75.00"
+    mode "1920x1080@60.00"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 2
+    scale 1 
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -91,7 +92,19 @@ output "DP-3" {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-    position x=1280 y=0
+    position x=0 y=0
+}
+
+output "HDMI-A-1" {
+    // Uncomment this line to disable this output.
+    // off
+
+    focus-at-startup
+
+    mode "1920x1080@60.00"
+    scale 1
+    transform "normal"
+    position x=1920 y=0
 }
 
 layout {
@@ -190,6 +203,9 @@ layout {
     }
 }
 
+// Remove some windows titlebars
+prefer-no-csd
+
 // Startup commands.
 
 spawn-at-startup "waybar"
@@ -205,8 +221,6 @@ spawn-sh-at-startup "syncthing --no-browser"
 spawn-sh-at-startup "exec /usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "xhost +SI:localuser:root"
 spawn-sh-at-startup "pkexec brillo -I"
-
-
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -236,11 +250,11 @@ animations {
 
 // Costom workspaces
 workspace "β"{
-    open-on-output "DP-3"
+    open-on-output "HDMI-A-1"
 }
 
 workspace "Ψ"{
-    open-on-output "DP-3"
+    open-on-output "HDMI-A-1"
 }
 
 // Command to pi app-id : "niri msg pick-window"
@@ -387,11 +401,16 @@ binds {
     //Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
     // Alternatively, there are commands to move just a single window:
-    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
-    // ...
+    Mod+Shift+Ctrl+Left  	{ move-window-to-monitor-left; }
+    Mod+Shift+Ctrl+Right  	{ move-window-to-monitor-right; }
+    Mod+Shift+Ctrl+Up  		{ move-window-to-monitor-up; }
+    Mod+Shift+Ctrl+Down  	{ move-window-to-monitor-down; }
 
     // And you can also move a whole workspace to another monitor:
-    // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
+    Mod+Alt+Ctrl+Left  	{ move-workspace-to-monitor-left; }
+    Mod+Alt+Ctrl+Right  	{ move-workspace-to-monitor-right; }
+    Mod+Alt+Ctrl+Up  		{ move-workspace-to-monitor-up; }
+    Mod+Alt+Ctrl+Down  	{ move-workspace-to-monitor-down; }
     // ...
 
     Mod+Page_Down      { focus-workspace-down; }
