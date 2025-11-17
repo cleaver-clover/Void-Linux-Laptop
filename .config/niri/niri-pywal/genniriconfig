@@ -357,7 +357,7 @@ binds {
 
     // Launch application keybinds
     Super+Alt+B allow-when-locked=false { spawn "librewolf"; }
-    Super+Alt+N allow-when-locked=false { spawn "nautilus; }
+    Super+Alt+N allow-when-locked=false { spawn "nautilus"; }
     Super+Alt+K allow-when-locked=false { spawn "keepassxc"; }
 
     // pywal binds
