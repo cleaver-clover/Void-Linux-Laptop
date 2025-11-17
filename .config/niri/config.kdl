@@ -3,6 +3,16 @@
 // Check the wiki for a full description of the configuration:
 // https://yalter.github.io/niri/Configuration:-Introduction
 
+gestures {
+    hot-corners {
+        off
+        // top-left
+        // top-right
+        // bottom-left
+        // bottom-right
+    }
+}
+
 input {
     mod-key "Super"
     mod-key-nested "Alt"
@@ -56,7 +66,8 @@ input {
     focus-follows-mouse max-scroll-amount="0%"
 }
 
-output "DP-3" {
+// Comment to setup automatically
+output "eDP-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -66,10 +77,10 @@ output "DP-3" {
     // for the resolution.
     // If the mode is omitted altogether or is invalid, niri will pick one automatically.
     // Run "niri msg outputs" while inside a niri instance to list all outputs and their modes.
-    mode "1920x1080@75.00"
+    mode "1920x1080@60.00"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 2
+    scale 1 
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -84,12 +95,26 @@ output "DP-3" {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-    position x=1280 y=0
+    position x=0 y=0
+}
+
+output "HDMI-A-1" {
+    // Uncomment this line to disable this output.
+    // off
+
+    focus-at-startup
+
+    mode "1920x1080@60.00"
+    scale 1
+    transform "normal"
+    position x=1920 y=0
 }
 
 layout {
     // Set gaps around windows in logical pixels.
     gaps 16
+
+    always-center-single-column
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -124,11 +149,11 @@ layout {
         // - RGB hex: "#rgb", "#rgba", "#rrggbb", "#rrggbbaa"
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
-        // active-color "#5E574A"
+        // active-color "#7C807A"
 
-        inactive-color "#0C0C08"
+        inactive-color "#101212"
 
-        active-gradient from="#6C5633" to="#5E574A" angle=70
+        active-gradient from="#5B6562" to="#7C807A" angle=70
 
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
@@ -139,11 +164,11 @@ layout {
         off
 
         width 2
-        active-color "#5E574A"
-        inactive-color "#0C0C08"
+        active-color "#7C807A"
+        inactive-color "#101212"
 
         // Color of the border around windows that request your attention.
-        urgent-color "#d1c2a7"
+        urgent-color "#ceccc9"
 
         // active-gradient from="#e5989b" to="#ffb4a2" angle=45 relative-to="workspace-view" in="oklch longer hue"
 
@@ -181,6 +206,9 @@ layout {
     }
 }
 
+// Remove some windows titlebars
+prefer-no-csd
+
 // Startup commands.
 
 spawn-at-startup "waybar"
@@ -195,9 +223,8 @@ spawn-sh-at-startup "wal -n -R"
 spawn-sh-at-startup "syncthing --no-browser"
 spawn-sh-at-startup "exec /usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "xhost +SI:localuser:root"
+spawn-sh-at-startup "wl-clip-persist --clipboard both"
 spawn-sh-at-startup "pkexec brillo -I"
-
-
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -225,11 +252,20 @@ animations {
     // slowdown 3.0
 }
 
+// Costom workspaces
+workspace "β"{
+    open-on-output "HDMI-A-1"
+}
+
+workspace "Ψ"{
+    open-on-output "HDMI-A-1"
+}
+
 // Command to pi app-id : "niri msg pick-window"
 
 // Example: block out password managers from screen capture.
 window-rule {
-    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id="KeePassXC"
     block-out-from "screen-capture"
 
     // Use this instead if you want them visible on third-party screenshot tools.
@@ -247,26 +283,34 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"kitty$"#
+    match app-id="kitty"
     opacity 0.9
 }
 
-window-rule {
-    match app-id=r#"nemo$"#
-    match app-id=r#"dev.zed.Zed-Preview$"#
-    match app-id=r#"Logseq$"#
+window-rule { 
+    match app-id="nemo"
+    match app-id="dev.zed.Zed-Preview"
+    match app-id="Logseq"
     opacity 0.94
 }
 
 window-rule { 
-    match app-id=r#"chromium$"#
-    match app-id=r#"librewolf$"#
+    match app-id="chromium*"
+    match app-id="librewolf"
     open-maximized true
+    open-on-workspace "β"
 }
 
 window-rule {
-    match app-id=r#"qalculate-gtk$"#
+    match app-id="qalculate-gtk"
     open-floating true
+}
+
+window-rule {
+    match app-id="nemo"
+    match app-id="kitty"
+    match app-id="KeePassXC"
+    open-on-workspace "Ψ"
 }
 
 binds {
@@ -361,11 +405,16 @@ binds {
     //Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
     // Alternatively, there are commands to move just a single window:
-    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
-    // ...
+    Mod+Shift+Ctrl+Left  	{ move-window-to-monitor-left; }
+    Mod+Shift+Ctrl+Right  	{ move-window-to-monitor-right; }
+    Mod+Shift+Ctrl+Up  		{ move-window-to-monitor-up; }
+    Mod+Shift+Ctrl+Down  	{ move-window-to-monitor-down; }
 
     // And you can also move a whole workspace to another monitor:
-    // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
+    Mod+Alt+Ctrl+Left  	{ move-workspace-to-monitor-left; }
+    Mod+Alt+Ctrl+Right  	{ move-workspace-to-monitor-right; }
+    Mod+Alt+Ctrl+Up  		{ move-workspace-to-monitor-up; }
+    Mod+Alt+Ctrl+Down  	{ move-workspace-to-monitor-down; }
     // ...
 
     Mod+Page_Down      { focus-workspace-down; }

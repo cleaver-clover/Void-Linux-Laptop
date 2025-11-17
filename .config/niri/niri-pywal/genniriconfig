@@ -10,6 +10,16 @@ cat <<CONF
 // Check the wiki for a full description of the configuration:
 // https://yalter.github.io/niri/Configuration:-Introduction
 
+gestures {
+    hot-corners {
+        off
+        // top-left
+        // top-right
+        // bottom-left
+        // bottom-right
+    }
+}
+
 input {
     mod-key "Super"
     mod-key-nested "Alt"
@@ -220,6 +230,7 @@ spawn-sh-at-startup "wal -n -R"
 spawn-sh-at-startup "syncthing --no-browser"
 spawn-sh-at-startup "exec /usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "xhost +SI:localuser:root"
+spawn-sh-at-startup "wl-clip-persist --clipboard both"
 spawn-sh-at-startup "pkexec brillo -I"
 
 hotkey-overlay {
@@ -284,7 +295,7 @@ window-rule {
 }
 
 window-rule { 
-    match app-id="nemo"
+    match app-id="org.gnome.Nautilus"
     match app-id="dev.zed.Zed-Preview"
     match app-id="Logseq"
     opacity 0.94
@@ -303,7 +314,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="nemo"
+    match app-id="org.gnome.Nautilus"
     match app-id="kitty"
     match app-id="KeePassXC"
     open-on-workspace "Ψ"
@@ -346,7 +357,7 @@ binds {
 
     // Launch application keybinds
     Super+Alt+B allow-when-locked=false { spawn "librewolf"; }
-    Super+Alt+N allow-when-locked=false { spawn "nemo"; }
+    Super+Alt+N allow-when-locked=false { spawn "nautilus; }
     Super+Alt+K allow-when-locked=false { spawn "keepassxc"; }
 
     // pywal binds
