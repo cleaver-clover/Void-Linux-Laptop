@@ -188,8 +188,8 @@ static const Key keys[] = {
 	{ ShiftMask,       	    		XK_Down,   spawn,           SHCMD("mpc toggle") },
 	{ ShiftMask,       	    		XK_Right,  spawn,           SHCMD("mpc next") },
 	{ ShiftMask,       	    		XK_Left,   spawn,			SHCMD("mpc prev") },
-	{ MODKEY|ShiftMask,				XK_Prior,  spawn,			SHCMD("brillo -u 150000 -A 5 && brillo -O") },
-	{ MODKEY|ShiftMask,				XK_Next,   spawn,          	SHCMD("brillo -u 150000 -U 5 && brillo -O") },
+	{ Mod1Mask,				        XK_Up,     spawn,			SHCMD("brillo -u 150000 -A 5 && brillo -O") },
+	{ Mod1Mask,				        XK_Down,   spawn,          	SHCMD("brillo -u 150000 -U 5 && brillo -O") },
 //	{ 0,							0x1008ff03,spawn,           SHCMD("brillo -u 150000 -A 5 && brillo -O") },
 //	{ 0,							0x1008ff03,spawn,           SHCMD("brillo -u 150000 -U 5 && brillo -O") },
 	/* Rotate screen on 180 degrees laptops */
