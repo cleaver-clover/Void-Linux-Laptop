@@ -230,8 +230,10 @@ spawn-sh-at-startup "wal -n -R"
 spawn-sh-at-startup "syncthing --no-browser"
 spawn-sh-at-startup "exec /usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "xhost +SI:localuser:root"
-spawn-sh-at-startup "wl-clip-persist --clipboard both"
 spawn-sh-at-startup "pkexec brillo -I"
+spawn-sh-at-startup "wl-paste --watch cliphist store"
+spawn-sh-at-startup "cliphist wipe"
+
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -292,6 +294,12 @@ window-rule {
 window-rule {
     match app-id="kitty"
     opacity 0.9
+}
+
+window-rule {
+    match title="vim*"
+    match app-id="kitty"
+    opacity 0.98
 }
 
 window-rule { 
@@ -363,6 +371,10 @@ binds {
     // pywal binds
     Super+R allow-when-locked=false { spawn-sh "sh ~/.config/scripts/set-rand-wallpaper.sh"; }
     Super+Alt+W allow-when-locked=false { spawn-sh "sh ~/.config/scripts/nsxiv.sh "; }
+
+    // clipboard bindings
+    Super+C allow-when-locked=false { spawn-sh "cliphist list | rofi -dmenu -p '' | cliphist decode | wl-copy"; }
+    Super+V allow-when-locked=false { spawn-sh "sh -c 'cliphist list | head -n 1 | cliphist decode | wl-copy && wtype -M ctrl v'"; }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     Mod+backslash repeat=false { toggle-overview; }
