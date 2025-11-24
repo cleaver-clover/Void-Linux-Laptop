@@ -149,11 +149,11 @@ layout {
         // - RGB hex: "#rgb", "#rgba", "#rrggbb", "#rrggbbaa"
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
-        // active-color "#7C807A"
+        // active-color "#747E81"
 
-        inactive-color "#101212"
+        inactive-color "#191510"
 
-        active-gradient from="#5B6562" to="#7C807A" angle=70
+        active-gradient from="#94735F" to="#747E81" angle=70
 
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
@@ -164,11 +164,11 @@ layout {
         off
 
         width 2
-        active-color "#7C807A"
-        inactive-color "#101212"
+        active-color "#747E81"
+        inactive-color "#191510"
 
         // Color of the border around windows that request your attention.
-        urgent-color "#ceccc9"
+        urgent-color "#e4dbd4"
 
         // active-gradient from="#e5989b" to="#ffb4a2" angle=45 relative-to="workspace-view" in="oklch longer hue"
 
@@ -223,8 +223,13 @@ spawn-sh-at-startup "wal -n -R"
 spawn-sh-at-startup "syncthing --no-browser"
 spawn-sh-at-startup "exec /usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "xhost +SI:localuser:root"
-spawn-sh-at-startup "wl-clip-persist --clipboard both"
 spawn-sh-at-startup "pkexec brillo -I"
+
+// Clipboard
+spawn-sh-at-startup "wl-paste --watch"
+// spawn-sh-at-startup "wl-paste --watch cliphist store"
+// spawn-sh-at-startup "cliphist wipe"
+
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -285,6 +290,11 @@ window-rule {
 window-rule {
     match app-id="kitty"
     opacity 0.9
+}
+
+window-rule {
+    match title="vim*"
+    opacity 0.98
 }
 
 window-rule { 
@@ -356,6 +366,10 @@ binds {
     // pywal binds
     Super+R allow-when-locked=false { spawn-sh "sh ~/.config/scripts/set-rand-wallpaper.sh"; }
     Super+Alt+W allow-when-locked=false { spawn-sh "sh ~/.config/scripts/nsxiv.sh "; }
+
+    // clipboard bindings
+    // Super+C allow-when-locked=false { spawn-sh "cliphist list | rofi -dmenu -p '' | cliphist decode | wl-copy"; }
+    // Super+V allow-when-locked=false { spawn-sh "sh -c 'cliphist list | head -n 1 | cliphist decode | wl-copy && wtype -M ctrl v'"; }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     Mod+backslash repeat=false { toggle-overview; }
