@@ -231,6 +231,7 @@ spawn-sh-at-startup "syncthing --no-browser"
 spawn-sh-at-startup "exec /usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "xhost +SI:localuser:root"
 spawn-sh-at-startup "pkexec brillo -I"
+spawn-sh-at-startup "sh $HOME/.config/scripts/battery-level.sh"
 
 // Clipboard
 spawn-sh-at-startup "wl-paste --watch"
@@ -312,7 +313,7 @@ window-rule {
 }
 
 window-rule { 
-    match app-id="chromium*"
+    match app-id="chrom*"
     match app-id="librewolf"
     open-maximized true
     open-on-workspace "β"

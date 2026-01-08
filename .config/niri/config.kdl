@@ -149,11 +149,11 @@ layout {
         // - RGB hex: "#rgb", "#rgba", "#rrggbb", "#rrggbbaa"
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
-        // active-color "#747E81"
+        // active-color "#CBADB1"
 
-        inactive-color "#191510"
+        inactive-color "#121b1c"
 
-        active-gradient from="#94735F" to="#747E81" angle=70
+        active-gradient from="#C27F81" to="#CBADB1" angle=70
 
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
@@ -164,11 +164,11 @@ layout {
         off
 
         width 2
-        active-color "#747E81"
-        inactive-color "#191510"
+        active-color "#CBADB1"
+        inactive-color "#121b1c"
 
         // Color of the border around windows that request your attention.
-        urgent-color "#e4dbd4"
+        urgent-color "#dfdce2"
 
         // active-gradient from="#e5989b" to="#ffb4a2" angle=45 relative-to="workspace-view" in="oklch longer hue"
 
@@ -224,6 +224,7 @@ spawn-sh-at-startup "syncthing --no-browser"
 spawn-sh-at-startup "exec /usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "xhost +SI:localuser:root"
 spawn-sh-at-startup "pkexec brillo -I"
+spawn-sh-at-startup "sh /home/clover/.config/scripts/battery-level.sh"
 
 // Clipboard
 spawn-sh-at-startup "wl-paste --watch"
@@ -305,7 +306,7 @@ window-rule {
 }
 
 window-rule { 
-    match app-id="chromium*"
+    match app-id="chrom*"
     match app-id="librewolf"
     open-maximized true
     open-on-workspace "β"
