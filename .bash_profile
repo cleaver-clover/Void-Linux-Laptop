@@ -8,3 +8,4 @@ if [[ $(tty) == /dev/tty1 ]]; then
 	# startx
 	dbus-run-session niri --session
 fi
+. "$HOME/.cargo/env" # rustup

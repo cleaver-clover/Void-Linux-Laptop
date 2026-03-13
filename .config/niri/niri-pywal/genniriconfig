@@ -306,17 +306,10 @@ window-rule {
 }
 
 window-rule { 
-    match app-id="org.gnome.Nautilus"
+    //match app-id="org.gnome.Nautilus"
     match app-id="dev.zed.Zed-Preview"
     match app-id="Logseq"
     opacity 0.94
-}
-
-window-rule { 
-    match app-id="chrom*"
-    match app-id="librewolf"
-    open-maximized true
-    open-on-workspace "β"
 }
 
 window-rule {
@@ -325,10 +318,24 @@ window-rule {
 }
 
 window-rule {
+    match app-id="zen"
+    open-maximized true
+}
+
+window-rule { 
+    match app-id="chrom*"
+    match app-id="librewolf"
+    open-maximized true
+    open-on-workspace "β"
+	open-focused true
+}
+
+window-rule {
     match app-id="org.gnome.Nautilus"
     match app-id="kitty"
     match app-id="KeePassXC"
     open-on-workspace "Ψ"
+	open-focused true
 }
 
 binds {

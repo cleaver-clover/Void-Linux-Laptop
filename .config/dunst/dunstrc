@@ -7,7 +7,7 @@
     width = (50, 350)
     height = (50,250)
 
-    origin = tot-right
+    origin = bottom-right
     offset = (20, 20) 
     
     indicate_hidden = yes
@@ -19,7 +19,7 @@
     horizontal_padding = 8
 
     frame_width = 2
-    frame_color = "#dfdce2"
+    frame_color = "#623E41"
 
     separator_color = auto
     sort = yes
@@ -46,7 +46,7 @@
 
     icon_position = left
     
-    max_icon_size = 120  # Scale larger icons down to this size, set to 0 to disable
+    max_icon_size = 75  # Scale larger icons down to this size, set to 0 to disable
 
 
     # Paths to default icons.
@@ -94,23 +94,25 @@
 
 [urgency_low]
  
-    background = "#121b1c"
-    foreground = "#dfdce2"
+    background = "#020304"
+    foreground = "#eeb9b5"
+    frame_color = "#623E41"
     timeout = 6
     # Icon for notifications with low urgency, uncomment to enable
     icon = /home/arega/.config/dunst/notification-icon.png
 
 [urgency_normal]
-background = "#121b1c"
-foreground = "#dfdce2"
+	background = "#020304"
+	foreground = "#eeb9b5"
+    frame_color = "#623E41"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     icon = /home/arega/.config/dunst/notification-icon.png
 
 [urgency_critical]
-background = "#121b1c"
-foreground = "#dfdce2"
-    frame_color = "#CBADB1"
+	background = "#020304"
+	foreground = "#eeb9b5"
+    frame_color = "#623E41"
     timeout = 120
     # Icon for notifications with critical urgency, uncomment to enable
     icon = /home/arega/.config/dunst/alert-icon.png

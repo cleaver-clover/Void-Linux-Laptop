@@ -19,4 +19,6 @@ PS1='\u @ \w >> '
 
 #----------- PATH -----------
 export PATH="$PATH:$HOME/.local/bin" # needed for appman
-source $HOME/.openfoam/OpenFOAM-v2506/etc/bashrc #OpenFOAM
+#source $HOME/.openfoam/OpenFOAM-v2506/etc/bashrc #OpenFOAM
+. "$HOME/.cargo/env"
+

@@ -149,11 +149,11 @@ layout {
         // - RGB hex: "#rgb", "#rgba", "#rrggbb", "#rrggbbaa"
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
-        // active-color "#CBADB1"
+        // active-color "#44474A"
 
-        inactive-color "#121b1c"
+        inactive-color "#020304"
 
-        active-gradient from="#C27F81" to="#CBADB1" angle=70
+        active-gradient from="#623E41" to="#44474A" angle=70
 
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
@@ -164,11 +164,11 @@ layout {
         off
 
         width 2
-        active-color "#CBADB1"
-        inactive-color "#121b1c"
+        active-color "#44474A"
+        inactive-color "#020304"
 
         // Color of the border around windows that request your attention.
-        urgent-color "#dfdce2"
+        urgent-color "#eeb9b5"
 
         // active-gradient from="#e5989b" to="#ffb4a2" angle=45 relative-to="workspace-view" in="oklch longer hue"
 
@@ -299,17 +299,10 @@ window-rule {
 }
 
 window-rule { 
-    match app-id="org.gnome.Nautilus"
+    //match app-id="org.gnome.Nautilus"
     match app-id="dev.zed.Zed-Preview"
     match app-id="Logseq"
     opacity 0.94
-}
-
-window-rule { 
-    match app-id="chrom*"
-    match app-id="librewolf"
-    open-maximized true
-    open-on-workspace "β"
 }
 
 window-rule {
@@ -318,10 +311,24 @@ window-rule {
 }
 
 window-rule {
+    match app-id="zen"
+    open-maximized true
+}
+
+window-rule { 
+    match app-id="chrom*"
+    match app-id="librewolf"
+    open-maximized true
+    open-on-workspace "β"
+	open-focused true
+}
+
+window-rule {
     match app-id="org.gnome.Nautilus"
     match app-id="kitty"
     match app-id="KeePassXC"
     open-on-workspace "Ψ"
+	open-focused true
 }
 
 binds {
