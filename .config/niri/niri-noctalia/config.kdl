@@ -1,10 +1,3 @@
-#!/bin/sh
-
-# Generates niri configuration file
-
-. $HOME/.cache/wal/colors.sh
-
-cat <<CONF
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
 // Check the wiki for a full description of the configuration:
@@ -73,8 +66,7 @@ input {
     focus-follows-mouse max-scroll-amount="0%"
 }
 
-// Comment to setup automatically
-output "eDP-1" {
+output "DP-3" {
     // Uncomment this line to disable this output.
     // off
 
@@ -84,10 +76,10 @@ output "eDP-1" {
     // for the resolution.
     // If the mode is omitted altogether or is invalid, niri will pick one automatically.
     // Run "niri msg outputs" while inside a niri instance to list all outputs and their modes.
-    mode "1920x1080@60.00"
+    mode "1920x1080@75.00"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 1 
+    scale 2
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -102,20 +94,7 @@ output "eDP-1" {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-    position x=0 y=0
-}
-
-output "HDMI-A-1" {
-    // Uncomment this line to disable this output.
-    // off
-
-    focus-at-startup
-
-    //mode "1920x1080@60.00"
-    mode "1440x1080@60.00"
-    scale 1
-    transform "normal"
-    position x=1920 y=0
+    position x=1280 y=0
 }
 
 layout {
@@ -157,11 +136,11 @@ layout {
         // - RGB hex: "#rgb", "#rgba", "#rrggbb", "#rrggbbaa"
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
-        // active-color "$color3"
+        // active-color "#7C807A"
 
-        inactive-color "$color0"
+        inactive-color "#101212"
 
-        active-gradient from="$color1" to="$color3" angle=70
+        active-gradient from="#5B6562" to="#7C807A" angle=70
 
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
@@ -172,11 +151,11 @@ layout {
         off
 
         width 2
-        active-color "$color3"
-        inactive-color "$color0"
+        active-color "#7C807A"
+        inactive-color "#101212"
 
         // Color of the border around windows that request your attention.
-        urgent-color "$color7"
+        urgent-color "#ceccc9"
 
         // active-gradient from="#e5989b" to="#ffb4a2" angle=45 relative-to="workspace-view" in="oklch longer hue"
 
@@ -219,26 +198,24 @@ prefer-no-csd
 
 // Startup commands.
 
-spawn-at-startup "waybar"
+spawn-at-startup "noctalia"
+//spawn-at-startup "waybar"
 spawn-at-startup "pipewire"
 spawn-at-startup "gammastep"
-spawn-at-startup "mpd"
-spawn-at-startup "swww-daemon"
-spawn-at-startup "swayidle"
+//spawn-at-startup "mpd"
+//spawn-at-startup "swww-daemon"
+//spawn-at-startup "swayidle"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
-spawn-sh-at-startup "wal -n -R"
+//spawn-sh-at-startup "wal -n -R"
 spawn-sh-at-startup "syncthing --no-browser"
 spawn-sh-at-startup "exec /usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "xhost +SI:localuser:root"
-spawn-sh-at-startup "pkexec brillo -I"
-spawn-sh-at-startup "sh $HOME/.config/scripts/battery-level.sh"
 
 // Clipboard
 spawn-sh-at-startup "wl-paste --watch"
 // spawn-sh-at-startup "wl-paste --watch cliphist store"
 // spawn-sh-at-startup "cliphist wipe"
-
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -268,11 +245,11 @@ animations {
 
 // Costom workspaces
 workspace "β"{
-    open-on-output "HDMI-A-1"
+    open-on-output "DP-3"
 }
 
 workspace "Ψ"{
-    open-on-output "HDMI-A-1"
+    open-on-output "DP-3"
 }
 
 // Command to pi app-id : "niri msg pick-window"
@@ -313,6 +290,7 @@ window-rule {
     opacity 0.94
 }
 
+
 window-rule {
     match app-id="qalculate-gtk"
     open-floating true
@@ -325,6 +303,7 @@ window-rule {
 
 window-rule { 
     match app-id="chrom*"
+    match app-id="brave-browser"
     match app-id="librewolf"
     open-maximized true
     open-on-workspace "β"
@@ -339,6 +318,18 @@ window-rule {
 	open-focused true
 }
 
+window-rule {
+  match app-id="dev.noctalia.Noctalia"
+  open-floating true
+  default-column-width { fixed 1080; }
+  default-window-height { fixed 920; }
+}
+
+debug {
+  // Allows notification actions and window activation from Noctalia.
+  honor-xdg-activation-with-invalid-serial
+}
+
 binds {
 
     // Mod+Shift+Slash { show-hotkey-overlay; }
@@ -347,15 +338,30 @@ binds {
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to "sh -c".
     Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Super+Escape hotkey-overlay-title="Lock the Screen: wlogout" { spawn-sh "wlogout --buttons-per-row=2"; }
-    Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
-    Mod+Space hotkey-overlay-title="Run an Application: rofi" { spawn-sh "rofi -show drun"; }
+    //Super+Escape hotkey-overlay-title="Lock the Screen: wlogout" { spawn-sh "wlogout --buttons-per-row=2"; }
+    //Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
+    //Mod+Space hotkey-overlay-title="Run an Application: rofi" { spawn-sh "rofi -show drun"; }
+
+    // Core Noctalia binds
+    Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+Alt+C { spawn-sh "noctalia msg panel-toggle control-center"; }
+    Mod+Alt+S { spawn-sh "noctalia msg settings-toggle"; }
+    Alt+Tab { spawn-sh "noctalia msg window-switcher"; }
+
 
     // Volume keys
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
-    XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    //XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
+    //XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    //XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    //XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+
+    // Audio & Brightness
+    XF86AudioRaiseVolume { spawn-sh "noctalia msg volume-up"; }
+    XF86AudioLowerVolume { spawn-sh "noctalia msg volume-down"; }
+    XF86AudioMute { spawn-sh "noctalia msg volume-mute"; }
+    XF86MonBrightnessUp { spawn-sh "noctalia msg brightness-up"; }
+    XF86MonBrightnessDown { spawn-sh "noctalia msg brightness-down"; }
+
 
     // Media keys
     Ctrl+Down allow-when-locked=true { spawn-sh "playerctl play-pause"; }
@@ -369,10 +375,8 @@ binds {
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
     // but you need to manually put each argument in separate "" quotes.
-    //XF86MonBrightnessUp allow-when-locked=true { spawn-sh "pkexec brillo -u 150000 -A 5 && pkexec brillo -O"; }
-    //XF86MonBrightnessDown allow-when-locked=true { spawn-sh "pkexec brillo -u 150000 -U 5 && pkexec brillo -O"; }
-    Alt+Up allow-when-locked=true { spawn-sh "pkexec brillo -u 150000 -A 5 && pkexec brillo -O"; }
-    Alt+Down allow-when-locked=true { spawn-sh "pkexec brillo -u 150000 -U 5 && pkexec brillo -O"; }
+    //XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+    //XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
     // Launch application keybinds
     Super+Alt+B allow-when-locked=false { spawn "librewolf"; }
@@ -380,13 +384,13 @@ binds {
     Super+Alt+K allow-when-locked=false { spawn "keepassxc"; }
 
     // pywal binds
-    Super+R allow-when-locked=false { spawn-sh "sh ~/.config/scripts/set-rand-wallpaper.sh"; }
-    Super+Alt+W allow-when-locked=false { spawn-sh "sh ~/.config/scripts/nsxiv.sh "; }
+    //Super+R allow-when-locked=false { spawn-sh "sh ~/.config/scripts/set-rand-wallpaper.sh"; }
+    //Super+Alt+W allow-when-locked=false { spawn-sh "sh ~/.config/scripts/nsxiv.sh "; }
 
     // clipboard bindings
-    // Super+C allow-when-locked=false { spawn-sh "cliphist list | rofi -dmenu -p '' | cliphist decode | wl-copy"; }
-    // Super+V allow-when-locked=false { spawn-sh "sh -c 'cliphist list | head -n 1 | cliphist decode | wl-copy && wtype -M ctrl v'"; }
-
+    //Super+C allow-when-locked=false { spawn-sh "cliphist list | rofi -dmenu -p '' | cliphist decode | wl-copy"; }
+    //Super+V allow-when-locked=false { spawn-sh "sh -c 'cliphist list | head -n 1 | cliphist decode | wl-copy && wtype -M ctrl v'"; }
+    
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     Mod+backslash repeat=false { toggle-overview; }
 
@@ -435,16 +439,11 @@ binds {
     //Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
     // Alternatively, there are commands to move just a single window:
-    Mod+Shift+Ctrl+Left  	{ move-window-to-monitor-left; }
-    Mod+Shift+Ctrl+Right  	{ move-window-to-monitor-right; }
-    Mod+Shift+Ctrl+Up  		{ move-window-to-monitor-up; }
-    Mod+Shift+Ctrl+Down  	{ move-window-to-monitor-down; }
+    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
+    // ...
 
     // And you can also move a whole workspace to another monitor:
-    Mod+Alt+Ctrl+Left  	{ move-workspace-to-monitor-left; }
-    Mod+Alt+Ctrl+Right  	{ move-workspace-to-monitor-right; }
-    Mod+Alt+Ctrl+Up  		{ move-workspace-to-monitor-up; }
-    Mod+Alt+Ctrl+Down  	{ move-workspace-to-monitor-down; }
+    // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
     // ...
 
     Mod+Page_Down      { focus-workspace-down; }
@@ -623,4 +622,3 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
-CONF

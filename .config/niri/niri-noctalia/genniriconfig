@@ -219,26 +219,20 @@ prefer-no-csd
 
 // Startup commands.
 
-spawn-at-startup "waybar"
+spawn-at-startup "noctalia"
 spawn-at-startup "pipewire"
 spawn-at-startup "gammastep"
-spawn-at-startup "mpd"
-spawn-at-startup "swww-daemon"
-spawn-at-startup "swayidle"
+//spawn-at-startup "mpd"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
-spawn-sh-at-startup "wal -n -R"
 spawn-sh-at-startup "syncthing --no-browser"
 spawn-sh-at-startup "exec /usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "xhost +SI:localuser:root"
-spawn-sh-at-startup "pkexec brillo -I"
-spawn-sh-at-startup "sh $HOME/.config/scripts/battery-level.sh"
 
 // Clipboard
 spawn-sh-at-startup "wl-paste --watch"
-// spawn-sh-at-startup "wl-paste --watch cliphist store"
-// spawn-sh-at-startup "cliphist wipe"
-
+spawn-sh-at-startup "wl-paste --watch cliphist store"
+spawn-sh-at-startup "cliphist wipe"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -313,6 +307,7 @@ window-rule {
     opacity 0.94
 }
 
+
 window-rule {
     match app-id="qalculate-gtk"
     open-floating true
@@ -325,6 +320,7 @@ window-rule {
 
 window-rule { 
     match app-id="chrom*"
+    match app-id="brave-browser"
     match app-id="librewolf"
     open-maximized true
     open-on-workspace "β"
@@ -339,6 +335,18 @@ window-rule {
 	open-focused true
 }
 
+window-rule {
+  match app-id="dev.noctalia.Noctalia"
+  open-floating true
+  default-column-width { fixed 1080; }
+  default-window-height { fixed 920; }
+}
+
+debug {
+  // Allows notification actions and window activation from Noctalia.
+  honor-xdg-activation-with-invalid-serial
+}
+
 binds {
 
     // Mod+Shift+Slash { show-hotkey-overlay; }
@@ -347,15 +355,21 @@ binds {
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to "sh -c".
     Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Super+Escape hotkey-overlay-title="Lock the Screen: wlogout" { spawn-sh "wlogout --buttons-per-row=2"; }
-    Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
-    Mod+Space hotkey-overlay-title="Run an Application: rofi" { spawn-sh "rofi -show drun"; }
 
-    // Volume keys
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
-    XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    // Core Noctalia binds
+    Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+Escape { spawn-sh "noctalia msg panel-toggle control-center"; }
+    //Mod+Alt+S { spawn-sh "noctalia msg settings-toggle"; }
+    Alt+Tab { spawn-sh "noctalia msg window-switcher"; }
+    Mod+Alt+W { spawn-sh "noctalia msg panel-toggle wallpaper"; }
+
+    // Noctalia Audio & Brightness
+    XF86AudioRaiseVolume { spawn-sh "noctalia msg volume-up"; }
+    XF86AudioLowerVolume { spawn-sh "noctalia msg volume-down"; }
+    XF86AudioMute { spawn-sh "noctalia msg volume-mute"; }
+    XF86MonBrightnessUp { spawn-sh "noctalia msg brightness-up"; }
+    XF86MonBrightnessDown { spawn-sh "noctalia msg brightness-down"; }
+
 
     // Media keys
     Ctrl+Down allow-when-locked=true { spawn-sh "playerctl play-pause"; }
@@ -365,28 +379,19 @@ binds {
     Shift+Right allow-when-locked=true { spawn-sh "mpc next"; }
     Shift+Left allow-when-locked=true { spawn-sh "mpc prev"; }
 
-
-    // Example brightness key mappings for brightnessctl.
-    // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
-    // but you need to manually put each argument in separate "" quotes.
-    //XF86MonBrightnessUp allow-when-locked=true { spawn-sh "pkexec brillo -u 150000 -A 5 && pkexec brillo -O"; }
-    //XF86MonBrightnessDown allow-when-locked=true { spawn-sh "pkexec brillo -u 150000 -U 5 && pkexec brillo -O"; }
-    Alt+Up allow-when-locked=true { spawn-sh "pkexec brillo -u 150000 -A 5 && pkexec brillo -O"; }
-    Alt+Down allow-when-locked=true { spawn-sh "pkexec brillo -u 150000 -U 5 && pkexec brillo -O"; }
-
     // Launch application keybinds
     Super+Alt+B allow-when-locked=false { spawn "librewolf"; }
     Super+Alt+N allow-when-locked=false { spawn "nautilus"; }
     Super+Alt+K allow-when-locked=false { spawn "keepassxc"; }
 
     // pywal binds
-    Super+R allow-when-locked=false { spawn-sh "sh ~/.config/scripts/set-rand-wallpaper.sh"; }
-    Super+Alt+W allow-when-locked=false { spawn-sh "sh ~/.config/scripts/nsxiv.sh "; }
+    //Super+R allow-when-locked=false { spawn-sh "sh ~/.config/scripts/set-rand-wallpaper.sh"; }
+    //Super+Alt+W allow-when-locked=false { spawn-sh "sh ~/.config/scripts/nsxiv.sh "; }
 
     // clipboard bindings
-    // Super+C allow-when-locked=false { spawn-sh "cliphist list | rofi -dmenu -p '' | cliphist decode | wl-copy"; }
-    // Super+V allow-when-locked=false { spawn-sh "sh -c 'cliphist list | head -n 1 | cliphist decode | wl-copy && wtype -M ctrl v'"; }
-
+    //Super+C allow-when-locked=false { spawn-sh "cliphist list | rofi -dmenu -p '' | cliphist decode | wl-copy"; }
+    //Super+V allow-when-locked=false { spawn-sh "sh -c 'cliphist list | head -n 1 | cliphist decode | wl-copy && wtype -M ctrl v'"; }
+    
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     Mod+backslash repeat=false { toggle-overview; }
 
@@ -435,16 +440,11 @@ binds {
     //Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
     // Alternatively, there are commands to move just a single window:
-    Mod+Shift+Ctrl+Left  	{ move-window-to-monitor-left; }
-    Mod+Shift+Ctrl+Right  	{ move-window-to-monitor-right; }
-    Mod+Shift+Ctrl+Up  		{ move-window-to-monitor-up; }
-    Mod+Shift+Ctrl+Down  	{ move-window-to-monitor-down; }
+    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
+    // ...
 
     // And you can also move a whole workspace to another monitor:
-    Mod+Alt+Ctrl+Left  	{ move-workspace-to-monitor-left; }
-    Mod+Alt+Ctrl+Right  	{ move-workspace-to-monitor-right; }
-    Mod+Alt+Ctrl+Up  		{ move-workspace-to-monitor-up; }
-    Mod+Alt+Ctrl+Down  	{ move-workspace-to-monitor-down; }
+    // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
     // ...
 
     Mod+Page_Down      { focus-workspace-down; }

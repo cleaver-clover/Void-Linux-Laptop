@@ -11,18 +11,18 @@ indicator-y-position=540
 indicator-radius=60
 indicator-thickness=10
 
-bs-hl-color=#44474A
+bs-hl-color=#5E574A
 
 caps-lock-bs-hl-color=ffa066
 caps-lock-key-hl-color=957fbb
 
-inside-color=#020304
-inside-clear-color=#020304
-inside-caps-lock-color=#020304
-inside-ver-color=#020304
-inside-wrong-color=#020304
+inside-color=#0C0C08
+inside-clear-color=#0C0C08
+inside-caps-lock-color=#0C0C08
+inside-ver-color=#0C0C08
+inside-wrong-color=#0C0C08
 
-key-hl-color=#44474A
+key-hl-color=#5E574A
 
 line-color=1f1f28
 line-clear-color=1f1f28
@@ -38,7 +38,7 @@ ring-wrong-color=1f1f28
 
 separator-color=00000000
 
-text-color=#eeb9b5
+text-color=#d1c2a7
 text-clear-color=ffa066
 text-caps-lock-color=957fbb
 text-ver-color=dcd7ba
