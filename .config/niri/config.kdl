@@ -80,7 +80,7 @@ output "eDP-1" {
     mode "1920x1080@60.00"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 1 
+    scale 1
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -150,11 +150,11 @@ layout {
         // - RGB hex: "#rgb", "#rgba", "#rrggbb", "#rrggbbaa"
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
-        // active-color "#555269"
+        // active-color "#36ACCB"
 
-        inactive-color "#0C0B17"
+        inactive-color "#04110D"
 
-        active-gradient from="#49374C" to="#555269" angle=70
+        active-gradient from="#7FAA6A" to="#36ACCB" angle=70
 
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
@@ -165,11 +165,11 @@ layout {
         off
 
         width 2
-        active-color "#555269"
-        inactive-color "#0C0B17"
+        active-color "#36ACCB"
+        inactive-color "#04110D"
 
         // Color of the border around windows that request your attention.
-        urgent-color "#c3c3cc"
+        urgent-color "#c1d2d7"
 
         // active-gradient from="#e5989b" to="#ffb4a2" angle=45 relative-to="workspace-view" in="oklch longer hue"
 
@@ -223,9 +223,9 @@ spawn-sh-at-startup "exec /usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "xhost +SI:localuser:root"
 
 // Clipboard
-spawn-sh-at-startup "wl-paste --watch"
-spawn-sh-at-startup "wl-paste --watch cliphist store"
-spawn-sh-at-startup "cliphist wipe"
+//spawn-sh-at-startup "wl-paste --watch"
+//spawn-sh-at-startup "wl-paste --watch cliphist store"
+//spawn-sh-at-startup "cliphist wipe"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -293,7 +293,7 @@ window-rule {
     opacity 0.98
 }
 
-window-rule { 
+window-rule {
     //match app-id="org.gnome.Nautilus"
     match app-id="dev.zed.Zed-Preview"
     match app-id="Logseq"
@@ -311,7 +311,7 @@ window-rule {
     open-maximized true
 }
 
-window-rule { 
+window-rule {
     match app-id="chrom*"
     match app-id="brave-browser"
     match app-id="librewolf"
@@ -384,7 +384,7 @@ binds {
     // clipboard bindings
     //Super+C allow-when-locked=false { spawn-sh "cliphist list | rofi -dmenu -p '' | cliphist decode | wl-copy"; }
     //Super+V allow-when-locked=false { spawn-sh "sh -c 'cliphist list | head -n 1 | cliphist decode | wl-copy && wtype -M ctrl v'"; }
-    
+
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     Mod+backslash repeat=false { toggle-overview; }
 
